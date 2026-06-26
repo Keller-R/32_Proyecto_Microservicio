@@ -1,0 +1,11 @@
+server:
+  port: ${SERVER_PORT:8081}
+
+spring:
+  application:
+    name: ms-pedidos
+
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOST:db.dtwjghxqvzmrgsntgkpn.supabase.co}:${DB_PORT:5432}/${DB_NAME:postgres}?sslMode=${DB_SSL_MODE:require}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:@Fantasmita110207}
