@@ -6,12 +6,12 @@ spring:
     name: ms-pedidos
 
   r2dbc:
-    url: r2dbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres}?sslMode=${DB_SSL_MODE:disable}
-    username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:password}
+    url: r2dbc:postgresql://${DB_HOST:aws-1-us-east-2.pooler.supabase.com}:${DB_PORT:5432}/${DB_NAME:postgres}?sslMode=${DB_SSL_MODE:require}&preparedStatementCacheQueries=0
+    username: ${DB_USER:postgres.xxzeitbtoohxknazssdu}
+    password: ${DB_PASSWORD:Steven2005*123456-}
 
-  servicios:
-    productos-url: ${PRODUCTOS_SERVICE_URL:http://localhost:8081}
+servicios:
+  productos-url: ${PRODUCTOS_SERVICE_URL:http://localhost:8081}
 
 management:
   endpoints:

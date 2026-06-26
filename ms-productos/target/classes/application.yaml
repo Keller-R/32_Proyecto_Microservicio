@@ -3,9 +3,9 @@ server:
 
 spring:
   application:
-    name: ms-pedidos
+    name: ms-productos
 
   r2dbc:
-    url: r2dbc:postgresql://${DB_HOST:db.dtwjghxqvzmrgsntgkpn.supabase.co}:${DB_PORT:5432}/${DB_NAME:postgres}?sslMode=${DB_SSL_MODE:require}
-    username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:@Fantasmita110207}
+    url: r2dbc:postgresql://${DB_HOST:aws-1-us-east-2.pooler.supabase.com}:${DB_PORT:5432}/${DB_NAME:postgres}?sslMode=${DB_SSL_MODE:require}&preparedStatementCacheQueries=0
+    username: ${DB_USER:postgres.xxzeitbtoohxknazssdu}
+    password: ${DB_PASSWORD:Steven2005*123456-}
