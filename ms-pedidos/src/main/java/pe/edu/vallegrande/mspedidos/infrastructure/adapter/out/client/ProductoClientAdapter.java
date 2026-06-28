@@ -20,11 +20,20 @@ public class ProductoClientAdapter implements IProductoClientPort {
 
     @Override
     public Mono<Producto> findById(Long id) {
-        return null;
+        return webClient.get()
+                .uri("/api/productos/{id}", id)
+                .retrieve()
+                .bodyToMono(Producto.class);
     }
 
     @Override
     public Mono<Producto> decreaseStock(Long id, Integer quantity) {
-        return null;
+        return webClient.patch()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/productos/{id}/decreaseStock")
+                        .queryParam("quantity", quantity)
+                        .build(id))
+                .retrieve()
+                .bodyToMono(Producto.class);
     }
 }

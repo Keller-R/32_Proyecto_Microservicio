@@ -33,16 +33,17 @@ public class PedidoService implements IPedidoServicePort {
 
     @Override
     public Mono<Pedido> create(Pedido order) {
-        return productoClientPort.findById(order.getId())
-                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido no encontrado")))
+        return productoClientPort.findById(Long.valueOf(order.getProductId()))
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado")))
                 .flatMap(product -> {
                     if (product.getStock()< order.getQuantity()){
                         return Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Stock insuficiente"));
                     }
 
-                    return productoClientPort.decreaseStock(order.getId(), order.getQuantity())
+                    return productoClientPort.decreaseStock(Long.valueOf(order.getProductId()), order.getQuantity())
                             .flatMap(updated -> {
-                                order.setTotal(product.getPrice() * order.getQuantity());
+                                order.setPrice(product.getPrice());           // precio unitario del producto
+                                order.setTotal(product.getPrice() * order.getQuantity()); // total = precio x cantidad
                                 order.setStatus("CONFIRMADO");
                                 order.setFecha(LocalDateTime.now());
                                 return repositoryPort.save(order);

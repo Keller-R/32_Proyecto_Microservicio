@@ -11,6 +11,6 @@ import reactor.core.publisher.Mono;
 public interface ProductoRespository extends ReactiveCrudRepository<Producto, Long> {
     Flux<Producto> findByActiveTrue();
 
-    @Query("UPDATE productos SET stock = stock - :quantity WHERE id = :id AND stock = >= :quantity RETURNING *")
+    @Query("UPDATE productos SET stock = stock - :quantity WHERE id = :id AND stock >= :quantity RETURNING *")
     Mono<Producto> decreaseStock(Long id, Integer quantity);
 }
