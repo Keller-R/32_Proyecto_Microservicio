@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-productos-deployment
+  namespace: ms-productos-ns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ms-productos
+  template:
+    metadata:
+      labels:
+        app: ms-productos
+    spec:
+      containers:
+      - name: ms-productos
+        image: kellerr/ms-productos:v1
+        ports:
+        - containerPort: 8081
+        env:
+        - name: SERVER_PORT
+          valueFrom:
+            secretKeyRef:
+              name: ms-productos-secret
+              key: SERVER_PORT
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: ms-productos-secret
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: ms-productos-secret
+              key: DB_PORT
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: ms-productos-secret
+              key: DB_NAME
+        - name: DB_SSL_MODE
+          valueFrom:
+            secretKeyRef:
+              name: ms-productos-secret
+              key: DB_SSL_MODE
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: ms-productos-secret
+              key: DB_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ms-productos-secret
+              key: DB_PASSWORD
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8081
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8081
+          initialDelaySeconds: 30
+          periodSeconds: 15
